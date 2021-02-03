@@ -36,7 +36,7 @@ def get_drinks():
     drink_query = Drink.query.all()
     drinks = [drink.short() for drink in drink_query]
     
-    if len(drinks) == 0;
+    if len(drinks) == 0:
         abort(404)
     
     try:
@@ -67,7 +67,7 @@ def get_drinks_detail():
     drink_query = Drink.query.all()
     drinks = [drink.long() for drink in drink_query]
     
-    if len(drinks) == 0;
+    if len(drinks) == 0:
         abort(404)
     
     try:
@@ -223,7 +223,7 @@ class AuthError(Exception):
         self.error = error
         self.status_code = status_code
 
-@APP.errorhandler(AuthError)
+@app.errorhandler(AuthError)
 def handle_auth_error(ex):
     response = jsonify(ex.error)
     response.status_code = ex.status_code
