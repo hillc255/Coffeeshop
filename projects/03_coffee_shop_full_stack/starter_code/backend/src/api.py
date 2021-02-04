@@ -20,6 +20,15 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
+#populate Drink models.py with 2 rows test data
+
+drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1},{"name": "water", "color": "clear", "parts": 2}]')
+drink.insert()
+# drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
+# drink.insert()
+# drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
+# drink.insert()
+
 ## ROUTES
 '''
 @TODO implement endpoint
@@ -60,6 +69,7 @@ def get_drinks():
 '''
 
 @app.route('/drinks-detail', methods=['GET'])
+@requires_auth('drinks-detail:drinks')
 def get_drinks_detail():
 
    # drinks = [drink.long() for drink in Drink.query.order_by(Drink.id).all()]
@@ -128,7 +138,30 @@ def add_drink(token):
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
         or appropriate status code indicating reason for failure
 '''
+@app.route('/drinks/<int:drink_id>', methods=['PATCH'])
+@requires_auth('patch:drinks')
+def update_drink(payload, drink_id):
+    
+    if drink_id is None: 
+        abort(404)
 
+    drink = Drink.query.get(drink_id)
+
+    if drink is None:
+        abort(404)
+
+    request_json = request.get_json()
+    drink.title = request.json.get('title')
+    drink.recipe = json.dumps(request_json.get('recipe'))
+
+    drink.update()
+    drinks = []
+    drinks.append(drink.long())
+
+    return jsonify({
+        'success': True, 
+        'drinks': drinks
+        }), 200
 
 '''
 @TODO implement endpoint
@@ -140,6 +173,27 @@ def add_drink(token):
     returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
         or appropriate status code indicating reason for failure
 '''
+
+@app.route('/drinks/<int:drink_id>', methods = ['DELETE'])
+@requires_auth('delete:drinks')
+def delete_drink(payload, drink_id):
+    try:
+        if drink_id is None: 
+            abort(404)
+
+        drink = Drink.query.get(drink_id)
+
+        if drink is None:
+            abort(404)
+
+        drink.delete()
+
+        return jsonify({
+            'success': True, 
+            "delete":drink_id
+            }), 200
+    except:
+        abort(422)
 
 
 ## Error Handling
