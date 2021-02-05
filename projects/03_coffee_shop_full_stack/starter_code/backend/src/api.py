@@ -6,14 +6,12 @@ from flask_cors import CORS
 
 from .database.models import db_drop_and_create_all, setup_db, Drink
 from .auth.auth import AuthError, requires_auth
-#from auth import AuthError
-#from flask import jsonify
 
 app = Flask(__name__)
 setup_db(app)
 CORS(app)
 
-#Added CORS and Uafter_request decorator to set Access-Control-Allow
+#Added CORS and after_request decorator to set Access-Control-Allow
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.after_request
@@ -80,7 +78,7 @@ def get_drinks():
 '''
 
 @app.route('/drinks-detail', methods=['GET'])
-@requires_auth('drinks-detail:drinks')
+@requires_auth('get:drinks-detail')
 def get_drinks_detail(payload):
 
    # drinks = [drink.long() for drink in Drink.query.order_by(Drink.id).all()]
