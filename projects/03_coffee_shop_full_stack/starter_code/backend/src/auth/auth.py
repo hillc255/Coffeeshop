@@ -37,6 +37,7 @@ def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header
     """
     auth = request.headers.get('Authorization', None)
+    
     if not auth:
         raise AuthError({
             'code': 'authorization_header_missing',
@@ -81,10 +82,10 @@ def check_permissions(permission, payload):
 '''
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
-                        raise AuthError({
-                            'code': 'invalid_claims',
-                            'description': 'Permissions not included in JWT.'
-                        }, 400)
+        raise AuthError({
+            'code': 'invalid_claims',
+            'description': 'Permissions not included in JWT.'
+        }, 400)
 
     if permission not in payload['permissions']:
         raise AuthError({
@@ -176,10 +177,10 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            #token = get_token_auth_header()
-            jwt = get_token_auth_header()
-            #payload = verify_decode_jwt(token)
-            payload = verify_decode_jwt(jwt)
+            token = get_token_auth_header()
+            #jwt = get_token_auth_header()
+            payload = verify_decode_jwt(token)
+            #payload = verify_decode_jwt(jwt)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
 

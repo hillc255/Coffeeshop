@@ -20,14 +20,13 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
-#populate Drink models.py with 2 rows test data
-
+#populate Drink models.py with 3 rows test data
 drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1},{"name": "water", "color": "clear", "parts": 2}]')
 drink.insert()
-# drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
-# drink.insert()
-# drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
-# drink.insert()
+drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
+drink.insert()
+drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
+drink.insert()
 
 ## ROUTES
 '''
@@ -57,8 +56,6 @@ def get_drinks():
     except:
         abort(404)
 
-
-
 '''
 @TODO implement endpoint
     GET /drinks-detail
@@ -70,7 +67,7 @@ def get_drinks():
 
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('drinks-detail:drinks')
-def get_drinks_detail():
+def get_drinks_detail(payload):
 
    # drinks = [drink.long() for drink in Drink.query.order_by(Drink.id).all()]
 
@@ -101,7 +98,7 @@ def get_drinks_detail():
 '''
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
-def add_drink(token):
+def create_drink(payload):
    
     body = request.get_json()
     title = body.get('title', None)
@@ -111,7 +108,7 @@ def add_drink(token):
         return jsonify({
             "success": False,
             "error": 422,
-            "message": "Add title and recipe"
+            "message": "Missing title or recipe"
         }), 422
 
     try:
@@ -232,7 +229,7 @@ def not_authorized(error):
     return jsonify({
                     "success": False, 
                     "error": 401,
-                    "message": "not authorized"
+                    "message": "Not authorized"
                     }), 401
 
 '''
