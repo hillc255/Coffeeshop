@@ -19,7 +19,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Headers',
                         'Content-Type, Authorization, true')
     response.headers.add('Access-Control-Allow-Methods',
-                        'GET, PUT, POST, DELETE, OPTIONS')
+                        'GET, PATCH, PUT, POST, DELETE, OPTIONS')
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -30,15 +30,13 @@ def after_request(response):
 '''
 db_drop_and_create_all()
 
-#populate Drink models.py with 3 rows test data
+#populate Drink models.py with 3 rows test data initially
 drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1}]')
 drink.insert()
-#drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1},{"name": "water", "color": "clear", "parts": 2}]')
-#drink.insert()
-#drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
-#drink.insert()
-#drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
-#drink.insert()
+drink = Drink(title='cappuccino', recipe='[{"name": "milk and beans", "color": "light brown", "parts": 2}]')
+drink.insert()
+drink = Drink(title='double expresso', recipe='[{"name": "only beans", "color": "dark brown", "parts": 3}]')
+drink.insert()
 
 ## ROUTES
 '''
@@ -80,8 +78,6 @@ def get_drinks():
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('get:drinks-detail')
 def get_drinks_detail(payload):
-
-   # drinks = [drink.long() for drink in Drink.query.order_by(Drink.id).all()]
 
     drink_query = Drink.query.all()
     drinks = [drink.long() for drink in drink_query]
@@ -199,7 +195,7 @@ def delete_drink(payload, drink_id):
 
         return jsonify({
             "success": True, 
-            "delete":drink_id
+            "delete": drink_id
             }), 200
     except:
         abort(422)
@@ -214,7 +210,7 @@ def unprocessable(error):
     return jsonify({
                     "success": False, 
                     "error": 422,
-                    "message": "unprocessable"
+                    "message": "Unprocessable Entity"
                     }), 422
 
 '''
@@ -223,7 +219,7 @@ def unprocessable(error):
              jsonify({
                     "success": False, 
                     "error": 404,
-                    "message": "resource not found"
+                    "message": "Resource Not Found"
                     }), 404
 
 '''
@@ -232,7 +228,7 @@ def bad_request(error):
     return jsonify({
                     "success": False, 
                     "error": 400,
-                    "message": "bad_request"
+                    "message": "Bad request"
                     }), 400
 
 
@@ -241,7 +237,7 @@ def not_authorized(error):
     return jsonify({
                     "success": False, 
                     "error": 401,
-                    "message": "Not authorized"
+                    "message": "Not Authorized"
                     }), 401
 
 '''
@@ -253,7 +249,7 @@ def record_not_found(error):
     return jsonify({
                     "success": False, 
                     "error": 404,
-                    "message": "record not found"
+                    "message": "Record Not Found"
                     }), 404
 
 
@@ -262,22 +258,14 @@ def method_not_allowed(error):
     return jsonify({
                     "success": False, 
                     "error": 405,
-                    "message": "method not allowed"
+                    "message": "Method Not Allowed"
                     }), 405
-
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    return jsonify({
-                    "success": False, 
-                    "error": 500,
-                    "message": "internal server error"
-                    }), 500
 
 '''
 @TODO implement error handler for AuthError
     error handler should conform to general task above 
 '''
+
 #https://auth0.com/docs/quickstart/backend/python
 
 # Error handler
@@ -286,8 +274,16 @@ class AuthError(Exception):
         self.error = error
         self.status_code = status_code
 
-@app.errorhandler(AuthError)
-def handle_auth_error(ex):
-    response = jsonify(ex.error)
-    response.status_code = ex.status_code
-    return response
+    @app.errorhandler(AuthError)
+    def authentication_failed(auth_error):
+        return jsonify({
+            "success": False,
+            "error": auth_error.status_code,
+            "message": "Authentication failed"
+        }), 401
+
+
+
+
+
+

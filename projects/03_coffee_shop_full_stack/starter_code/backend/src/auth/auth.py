@@ -37,16 +37,25 @@ def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header
     """
     if 'Authorization' not in request.headers:
-        abort(401)
+        raise AuthError({
+        'code': 'authorization_header_missing',
+        'description': 'Authorization header is expected.'
+        }, 401)
 
     auth_header = request.headers['Authorization']
     headers_parts = auth_header.split(' ')
 
     if len(headers_parts) != 2:
-        abort(401)
+        raise AuthError({
+        'code': 'invalid_header',
+        'description': 'Authorization header must be bearer token.'
+        }, 401)
     
     elif headers_parts[0].lower() != 'bearer':
-        abort(401)
+        raise AuthError({
+        'code': 'invalid_header',
+        'description': 'Authorization header must start with "Bearer".'
+        }, 401)
     
     return headers_parts[1]
     
@@ -193,9 +202,7 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            #token = get_token_auth_header()
             jwt = get_token_auth_header()
-            #payload = verify_decode_jwt(token)
             payload = verify_decode_jwt(jwt)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
