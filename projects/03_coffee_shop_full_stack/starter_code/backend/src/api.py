@@ -13,6 +13,18 @@ app = Flask(__name__)
 setup_db(app)
 CORS(app)
 
+#Added CORS and Uafter_request decorator to set Access-Control-Allow
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Headers',
+                        'Content-Type, Authorization, true')
+    response.headers.add('Access-Control-Allow-Methods',
+                        'GET, PUT, POST, DELETE, OPTIONS')
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 '''
 @TODO uncomment the following line to initialize the database
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
@@ -21,12 +33,14 @@ CORS(app)
 db_drop_and_create_all()
 
 #populate Drink models.py with 3 rows test data
-drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1},{"name": "water", "color": "clear", "parts": 2}]')
+drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1}]')
 drink.insert()
-drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
-drink.insert()
-drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
-drink.insert()
+#drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1},{"name": "water", "color": "clear", "parts": 2}]')
+#drink.insert()
+#drink = Drink(title='cappuccino', recipe='[{"name": "coffee and milk", "color": "light brown", "parts": 3}]')
+#drink.insert()
+#drink = Drink(title='double expresso', recipe='[{"name": "strong beans", "color": "black", "parts": 1}]')
+#drink.insert()
 
 ## ROUTES
 '''
@@ -49,8 +63,8 @@ def get_drinks():
     
     try:
         return jsonify({
-            "success": True,
-            "drinks": drinks
+            'success': True,
+            'drinks': drinks
         }), 200
 
     except:
@@ -116,8 +130,8 @@ def create_drink(payload):
         drink.insert()
 
         return jsonify({
-            'success': True,
-            'drinks': [drink.long()]
+            "success": True,
+            "drinks": [drink.long()]
         }), 200
 
     except:
@@ -156,8 +170,8 @@ def update_drink(payload, drink_id):
     drinks.append(drink.long())
 
     return jsonify({
-        'success': True, 
-        'drinks': drinks
+        "success": True, 
+        "drinks": drinks
         }), 200
 
 '''
@@ -186,7 +200,7 @@ def delete_drink(payload, drink_id):
         drink.delete()
 
         return jsonify({
-            'success': True, 
+            "success": True, 
             "delete":drink_id
             }), 200
     except:
