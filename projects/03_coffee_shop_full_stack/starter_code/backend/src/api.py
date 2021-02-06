@@ -265,10 +265,6 @@ def method_not_allowed(error):
 @TODO implement error handler for AuthError
     error handler should conform to general task above 
 '''
-
-#https://auth0.com/docs/quickstart/backend/python
-
-# Error handler
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
@@ -281,9 +277,4 @@ class AuthError(Exception):
             "error": auth_error.status_code,
             "message": "Authentication failed"
         }), 401
-
-
-
-
-
-
+        

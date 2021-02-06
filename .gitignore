@@ -1,9 +1,19 @@
 .vscode
 __pycache__
-venv
 
-# OS generated files #
-######################
+# environments
+.venv
+.env
+env/
+venv/
+ENV/
+
+# node dependency
+build
+node_modules
+npm-debug.log
+
+# OS generated files 
 .DS_Store
 .DS_Store?
 ._*
