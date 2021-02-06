@@ -11,7 +11,7 @@ app = Flask(__name__)
 setup_db(app)
 CORS(app)
 
-#Added CORS and after_request decorator to set Access-Control-Allow
+# Added CORS and after_request decorator to set Access-Control-Allow
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.after_request
@@ -24,13 +24,14 @@ def after_request(response):
     return response
 
 '''
-@TODO uncomment the following line to initialize the database
+ @TODO - Done: 
+ Ucomment the following line to initialize the database
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
 db_drop_and_create_all()
 
-#populate Drink models.py with 3 rows test data initially
+# Populate Drink models.py with 3 rows test data initially
 drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1}]')
 drink.insert()
 drink = Drink(title='cappuccino', recipe='[{"name": "milk and beans", "color": "light brown", "parts": 2}]')
@@ -40,7 +41,8 @@ drink.insert()
 
 ## ROUTES
 '''
-@TODO implement endpoint
+ @TODO - Done:
+ Implement endpoint
     GET /drinks
         it should be a public endpoint
         it should contain only the drink.short() data representation
@@ -67,7 +69,8 @@ def get_drinks():
         abort(404)
 
 '''
-@TODO implement endpoint
+ @TODO - Done:
+ Implement endpoint
     GET /drinks-detail
         it should require the 'get:drinks-detail' permission
         it should contain the drink.long() data representation
@@ -96,7 +99,8 @@ def get_drinks_detail(payload):
 
 
 '''
-@TODO implement endpoint
+ @TODO - Done:
+ Implement endpoint
     POST /drinks
         it should create a new row in the drinks table
         it should require the 'post:drinks' permission
@@ -133,7 +137,8 @@ def create_drink(payload):
 
 
 '''
-@TODO implement endpoint
+ @TODO - Done:
+ Implement endpoint
     PATCH /drinks/<id>
         where <id> is the existing model id
         it should respond with a 404 error if <id> is not found
@@ -169,7 +174,8 @@ def update_drink(payload, drink_id):
         }), 200
 
 '''
-@TODO implement endpoint
+ @TODO - Done:
+ Implement endpoint
     DELETE /drinks/<id>
         where <id> is the existing model id
         it should respond with a 404 error if <id> is not found
@@ -203,7 +209,8 @@ def delete_drink(payload, drink_id):
 
 ## Error Handling
 '''
-Example error handling for unprocessable entity
+ @TODO - Done:
+ Example error handling for unprocessable entity
 '''
 @app.errorhandler(422)
 def unprocessable(error):
@@ -214,7 +221,8 @@ def unprocessable(error):
                     }), 422
 
 '''
-@TODO implement error handlers using the @app.errorhandler(error) decorator
+ @TODO - Done:
+ Implement error handlers using the @app.errorhandler(error) decorator
     each error handler should return (with approprate messages):
              jsonify({
                     "success": False, 
@@ -241,7 +249,8 @@ def not_authorized(error):
                     }), 401
 
 '''
-@TODO implement error handler for 404
+ @TODO - Done:
+ Implement error handler for 404
     error handler should conform to general task above 
 '''
 @app.errorhandler(404)
@@ -262,7 +271,8 @@ def method_not_allowed(error):
                     }), 405
 
 '''
-@TODO implement error handler for AuthError
+ @TODO - Done:
+ Implement error handler for AuthError
     error handler should conform to general task above 
 '''
 class AuthError(Exception):
@@ -277,4 +287,3 @@ class AuthError(Exception):
             "error": auth_error.status_code,
             "message": "Authentication failed"
         }), 401
-        
