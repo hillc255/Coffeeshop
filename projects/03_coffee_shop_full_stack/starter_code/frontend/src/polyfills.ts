@@ -49,10 +49,12 @@
  *  with the following flag, it will bypass `zone.js` patch for IE/Edge
  *
  *  (window as any).__Zone_enable_cross_context_check = true;
+ * 
+ * import './zone-flags.ts'; This original import with ".ts" caused errors preventing GET/ 
  *
  */
 
-import './zone-flags.ts';
+import './zone-flags';
 
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
