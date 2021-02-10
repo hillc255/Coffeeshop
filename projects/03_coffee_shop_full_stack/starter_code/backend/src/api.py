@@ -65,8 +65,10 @@ def get_drinks():
             'drinks': drinks
         }), 200
 
-    except:
-        abort(404)
+    except Exception as e:
+        print('\n'+'Error getting drinks record: ', e)
+        abort(404)    
+
 
 '''
  @TODO - Done:
@@ -94,9 +96,9 @@ def get_drinks_detail(payload):
             "drinks": drinks
         }), 200
 
-    except:
+    except Exception as e:
+        print('\n'+'Error modifying drinks-detail: ', e)
         abort(404)
-
 
 '''
  @TODO - Done:
@@ -114,15 +116,29 @@ def get_drinks_detail(payload):
 def create_drink(payload):
    
     body = request.get_json()
-    title = body.get('title', None)
-    recipe = body.get('recipe', None)
+    title = body.get('title')
+    recipe = body.get('recipe')
 
+    # check to make sure title is not empty
     if not title or not recipe:
 
         return jsonify({
             "success": False,
             "error": 422,
             "message": "Missing title or recipe"
+        }), 422
+
+    # check to make sure recipe has values 
+    #res = [[i for i in test_dict[x]] for x in test_dict.keys()] 
+    #for key, value in recipe.items():
+    #res = [[i for i in recipe[x]] for x in recipe.values()]
+        #if not str(res)
+    if not any(d['color'] for d in recipe) or not any(d['name'] for d in recipe) or not any(d['parts'] for d in recipe):
+        
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "Missing recipe values"
         }), 422
 
     try:
@@ -136,9 +152,9 @@ def create_drink(payload):
             "drinks": [drink.long()]
         }), 200
 
-    except:
-        abort(422)
-
+    except Exception as e:
+        print('\n'+'Error posting record: ', e)
+        abort(404)
 
 '''
  @TODO - Done:
@@ -208,8 +224,10 @@ def delete_drink(payload, drink_id):
             "success": True, 
             "delete": drink_id
             }), 200
-    except:
-        abort(422)
+
+    except Exception as e:
+        print('\n'+'Error deleting drink record: ', e)
+        abort(404)
 
 
 ## Error Handling
