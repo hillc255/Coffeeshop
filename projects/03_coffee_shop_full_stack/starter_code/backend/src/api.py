@@ -32,11 +32,11 @@ def after_request(response):
 db_drop_and_create_all()
 
 # Populate Drink models.py with 3 rows test data initially
-drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "brown", "parts": 1}]')
+drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "red", "parts": 1}]')
 drink.insert()
-drink = Drink(title='cappuccino', recipe='[{"name": "milk and beans", "color": "light brown", "parts": 2}]')
+drink = Drink(title='cappuccino', recipe='[{"name": "milk and beans", "color": "green", "parts": 2}]')
 drink.insert()
-drink = Drink(title='double expresso', recipe='[{"name": "only beans", "color": "dark brown", "parts": 3}]')
+drink = Drink(title='double expresso', recipe='[{"name": "only beans", "color": "blue", "parts": 3}]')
 drink.insert()
 
 ## ROUTES
@@ -107,6 +107,7 @@ def get_drinks_detail(payload):
         it should contain the drink.long() data representation
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
+        --#[drink.long()]
 '''
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
@@ -117,6 +118,7 @@ def create_drink(payload):
     recipe = body.get('recipe', None)
 
     if not title or not recipe:
+
         return jsonify({
             "success": False,
             "error": 422,
@@ -124,8 +126,10 @@ def create_drink(payload):
         }), 422
 
     try:
-        drink = Drink(title=title, recipe=json.dumps([recipe]))
-        drink.insert()
+
+        drink = Drink(title=title, recipe=json.dumps(recipe))
+    
+        drink.insert()   
 
         return jsonify({
             "success": True,
@@ -147,6 +151,7 @@ def create_drink(payload):
         it should contain the drink.long() data representation
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
         or appropriate status code indicating reason for failure
+        --Note: changed return array from drink to drinks as the array
 '''
 @app.route('/drinks/<int:drink_id>', methods=['PATCH'])
 @requires_auth('patch:drinks')
