@@ -83,3 +83,46 @@ There are `@TODO` comments throughout the `./backend/src`. We recommend tackling
 
 1. `./src/auth/auth.py`
 2. `./src/api.py`
+
+### Documentation of Endpoints
+
+Endpoints
+
+GET '/drinks'
+GET '/drinks-detail'
+POST '/drinks'
+PATCH '/drinks/<id>'
+DELETE '/drinks/<id>'
+
+GET '/drinks'
+- Fetches: Drink title and drink.short() data representation.
+- Request Arguments:  None
+- Returns: A list of drinks with title and part of recipe key-value pair of title and color.  
+- Permissions: Public, Barista and Manager can GET and view this endpoint. 
+
+GET '/drinks-detail'
+- Fetches: Drink title and drink.long() data representation.
+- Request Arguments:  None
+- Returns: A list of drinks with title and complete recipe of key-value pair of title, color and parts for each drink.  
+- Permissions: Barista and Manager can GET and view this endpoint.
+
+POST '/drinks'
+- Fetches: Drink title and drink.long() data representation.
+- Request Arguments:  Input string with drink title and complete recipe of key-value pair of title, color and parts for each drink.
+- Returns: Drink array added to list of drinks. 
+- Permissions: Manager can POST with this endpoint.
+
+PATCH '/drinks/<id>'
+- Fetches: Single drink title and drink.long() data representation.
+- Request Arguments: Unique id - primary key: value of existing drink id.
+- Returns: Drink array of single drink title and complete recipe of key-value pair of title, color and parts for each drink with changes.
+- Permission: Manager can PATCH with this endpoint.
+
+DELETE '/drinks/<id>'
+- Fetches: Single drink title and drink.long() data representation.
+- Request Arguments: Unique id - primary key: value of existing drink id.
+- Returns: Drink array of the single deleted drink row with title and complete recipe of key-value of title, color and parts.
+- Permission: Manager can DELETE with this endpoint.
+
+
+

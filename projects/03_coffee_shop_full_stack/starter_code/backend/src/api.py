@@ -18,48 +18,51 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Headers',
-                        'Content-Type, Authorization, true')
+                         'Content-Type, Authorization, true')
     response.headers.add('Access-Control-Allow-Methods',
-                        'GET, PATCH, PUT, POST, DELETE, OPTIONS')
+                         'GET, PATCH, PUT, POST, DELETE, OPTIONS')
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+
 '''
- @TODO - Done: 
+ @TODO - Done:
  Ucomment the following line to initialize the database
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
 db_drop_and_create_all()
 
-# Populate Drink models.py with 3 rows test data initially
-drink = Drink(title='black coffee', recipe='[{"name": "beans", "color": "red", "parts": 1}]')
+# Populate Drink models.py with 3 rows to test data initially
+drink = Drink(title='black coffee', recipe = '[{"name":"beans","color":"red","parts":1}]')
 drink.insert()
-drink = Drink(title='cappuccino', recipe='[{"name": "milk and beans", "color": "green", "parts": 2}]')
+drink = Drink(title='latte', recipe = '[{"name":"milk and beans", "color":"green","parts":2}]')
 drink.insert()
-drink = Drink(title='double expresso', recipe='[{"name": "only beans", "color": "blue", "parts": 3}]')
+drink = Drink(title='double expresso', recipe = '[{"name":"only beans","color":"blue","parts":3}]')
 drink.insert()
 
-## ROUTES
+# ROUTES
 '''
  @TODO - Done:
  Implement endpoint
     GET /drinks
         it should be a public endpoint
         it should contain only the drink.short() data representation
-    returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
+    returns status code 200 and json {"success": True, "drinks": drinks}
+     where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+
 
 @app.route('/drinks', methods=['GET'])
 def get_drinks():
 
     drink_query = Drink.query.all()
     drinks = [drink.short() for drink in drink_query]
-    
+
     if len(drinks) == 0:
         abort(404)
-    
+
     try:
         return jsonify({
             'success': True,
@@ -68,7 +71,7 @@ def get_drinks():
 
     except Exception as e:
         print('\n'+'Error getting drinks record: ', e)
-        abort(404)    
+        abort(404)
 
 
 '''
@@ -77,9 +80,11 @@ def get_drinks():
     GET /drinks-detail
         it should require the 'get:drinks-detail' permission
         it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
+    returns status code 200 and json {"success": True, "drinks": drinks}
+     where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+
 
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('get:drinks-detail')
@@ -87,10 +92,10 @@ def get_drinks_detail(payload):
 
     drink_query = Drink.query.all()
     drinks = [drink.long() for drink in drink_query]
-    
+
     if len(drinks) == 0:
         abort(404)
-    
+
     try:
         return jsonify({
             "success": True,
@@ -101,6 +106,7 @@ def get_drinks_detail(payload):
         print('\n'+'Error modifying drinks-detail: ', e)
         abort(404)
 
+
 '''
  @TODO - Done:
  Implement endpoint
@@ -108,14 +114,17 @@ def get_drinks_detail(payload):
         it should create a new row in the drinks table
         it should require the 'post:drinks' permission
         it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
+    returns status code 200 and json {"success": True, "drinks": drink}
+        where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
         --#[drink.long()]
 '''
+
+
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
 def create_drink(payload):
-   
+
     body = request.get_json()
     title = body.get('title')
     recipe = body.get('recipe')
@@ -129,19 +138,8 @@ def create_drink(payload):
             "message": "Missing title or recipe"
         }), 422
 
-    # check to make sure recipe has values 
-    if not any(d['color'] for d in recipe) or not any(d['name'] for d in recipe) or not any(d['parts'] for d in recipe):
-        
-        return jsonify({
-            "success": False,
-            "error": 422,
-            "message": "Missing recipe value"
-        }), 422
-
     try:
-
         drink = Drink(title=title, recipe=json.dumps(recipe))
-    
         drink.insert()
 
         return jsonify({
@@ -309,6 +307,7 @@ def method_not_allowed(error):
  @TODO - Done:
  Implement error handler for AuthError
     error handler should conform to general task above
+    Auth0 quickstart example below:
 '''
 
 
