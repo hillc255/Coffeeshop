@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4288d31b-adc5-4312-bd20-6df897f6b705",
+		"_postman_id": "74b1e739-0b4a-4c25-8af5-3aad0d8e8dcb",
 		"name": "udacity-fsnd-udaspicelatte",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -343,7 +343,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhhMEJWQmx1VGxxVzFqZ3IwbjBJSCJ9.eyJpc3MiOiJodHRwczovL2Rldi1tZzluaHdtYS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQxMDc4ODUzNjk1MjUyMzczNDQiLCJhdWQiOlsiY29mZmVlc2hvcCIsImh0dHBzOi8vZGV2LW1nOW5od21hLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MTI1NTgxNTAsImV4cCI6MTYxMjU2NTM1MCwiYXpwIjoiZmhhVVpkT3ZWUTIzdGZsYlhyeEFRNTFIRzdjWGlrMmYiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiZ2V0OmRyaW5rcy1kZXRhaWwiXX0.xI9bTp3Pl4B-ium4X1JHWmMBvFd1_OrPxG_h83H68C6XT96Kqp4eeC4Aojv59Wrybvy_FAsJOYuRQo-bAUhODpp6Lf3JHsD15C-ZmhflyVS-p7fEQ4wHGFAdeLFGykBjHvKvlRykAg7PwIyAYlWGX_S91qJLUjl2n5ZYtHPdtGC8q3PmyhwJo2hJw-TtpVkVtwiLkFlJatSbRklrAJxafuO03vKY9bs4pau8IVzVzJaTjDSrFQGe1qFnNwg8G28kFs32J4yfoMqqjDTuipZhyq75k1aZ1RM5cmw69-njf7P3soM7Qj_MSpnkSHZTyXKs8S59k6bYRnQs8PbnQuFqJw",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhhMEJWQmx1VGxxVzFqZ3IwbjBJSCJ9.eyJpc3MiOiJodHRwczovL2Rldi1tZzluaHdtYS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQxMDc4ODUzNjk1MjUyMzczNDQiLCJhdWQiOlsiY29mZmVlc2hvcCIsImh0dHBzOi8vZGV2LW1nOW5od21hLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MTMxMjA2MjIsImV4cCI6MTYxMzIwNzAyMiwiYXpwIjoiZmhhVVpkT3ZWUTIzdGZsYlhyeEFRNTFIRzdjWGlrMmYiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiZ2V0OmRyaW5rcy1kZXRhaWwiXX0.BT_jIBwQSqx2vNbG0QG5K0AIxuZHhMhLeg4w72NbhO_eJJc_-f_cuzYek8sTL-YwOdYJATLyDQ5zOnOcb2i_T4_WaMjKqbgicsf_ekjxEpVb9lXVjRDNEb5YA6tIPXfF8sKM-vNjEeB9KUB1NQpCGBWdWHN0XIETOfBP84tizj8QmaEeHCMV4a3tCie9PHgVxU2qSMMSztZwU_EfDi28mKQz2DdmfJsrt0gU4nGSZIBYgnIzragTGMSow9bONGWzjH3XvAeH5uj9VC-7Wb91TVJ4wDi6u35mx_fSYcNEcVzhLyiStfU9Z2W8TyWEfAlJV7zG0GRh3qjX1ge-JIvRwA",
 						"type": "string"
 					}
 				]
@@ -549,13 +549,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/drinks/2",
+							"raw": "{{host}}/drinks/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"drinks",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -567,7 +567,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhhMEJWQmx1VGxxVzFqZ3IwbjBJSCJ9.eyJpc3MiOiJodHRwczovL2Rldi1tZzluaHdtYS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjAwNDQ4MWQ5ZWU4OGIwMDc3NmRiYWMyIiwiYXVkIjoiY29mZmVlc2hvcCIsImlhdCI6MTYxMjU1NzI0MiwiZXhwIjoxNjEyNTY0NDQyLCJhenAiOiJmaGFVWmRPdlZRMjN0ZmxiWHJ4QVE1MUhHN2NYaWsyZiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmRyaW5rcyIsImdldDpkcmlua3MtZGV0YWlsIiwicGF0Y2g6ZHJpbmtzIiwicG9zdDpkcmlua3MiXX0.zdjPYaavLOy9XytFooLk4J-pyFKw9Zsargjvbr28BKTTAllk2eo0u-6zg_Iv9ZEC-xKjmnfpD6RaQGaJrDGUdiRqJMnZe4sbovYF1IvMQCl399QSCXxv7_2M5rwWMAphLQalj1uDC1UXgFDKoEodLjRczWIVKZqYVQPDhKJLBkzFeCIVoKOB-UcaTItOSqrXeIZoaXWGDep1HHK6Br9vtt1llKUKvDP4Jk4rlNnz-p96IXPowz8QeiJES2sR3ajTX-BG6_lhdalwQBw4j7xo13IF4fvg5-G9LLmjcUbvF5kuqVeoAYenrhS9cjJVhCZuc6m6DQDLjGD1Bb6dkVFd4w",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhhMEJWQmx1VGxxVzFqZ3IwbjBJSCJ9.eyJpc3MiOiJodHRwczovL2Rldi1tZzluaHdtYS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjAwNDQ4MWQ5ZWU4OGIwMDc3NmRiYWMyIiwiYXVkIjoiY29mZmVlc2hvcCIsImlhdCI6MTYxMzEyMDUwMywiZXhwIjoxNjEzMjA2OTAzLCJhenAiOiJmaGFVWmRPdlZRMjN0ZmxiWHJ4QVE1MUhHN2NYaWsyZiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmRyaW5rcyIsImdldDpkcmlua3MtZGV0YWlsIiwicGF0Y2g6ZHJpbmtzIiwicG9zdDpkcmlua3MiXX0.LK_Sh2up2nlh1aq3Oayct485UeVt7eYKt-3bjWLCCGVDg9khj3Uu7qOqDZkaTi50EzMTIhL7BZJmZsZhRCRTg54OazVP5w2JfHYsm2n44o9JZlBopPWRefyw5RVdi4uyPVynSzewj2jX-fE9bhUPyD6IMg8FGwXDbDxuuHZd_bqwXbyAz_uEzXtNAtJ5EgclbDF44LyjzPTv72ucgzS0G2DIGdXguZKxBAyOnToZxTt5dpWr69QjEN6fJou5CSHhN4BxAeVzJDYarEP021kNCUmp_HZGCUGe4E4UePMOAhtISwj0j-cEQrRyw_NsfjR29mhxlxKd9ZnWCkrt6nmabA",
 						"type": "string"
 					}
 				]
@@ -594,6 +594,9 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "bearer"
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -617,8 +620,7 @@
 	"variable": [
 		{
 			"key": "host",
-			"value": "localhost:5000",
-			"type": "string"
+			"value": "localhost:5000"
 		}
 	]
 }
